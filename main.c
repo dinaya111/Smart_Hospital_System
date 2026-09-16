@@ -34,6 +34,40 @@ float finalBill[MAX_PATIENTS];
 int queueCount[NUM_SPECIALTIES] = {0, 0, 0, 0};
 
 int main() {
-    printf("Smart Hospital System - Starting...\n");
+    int choice;
+
+    while (1) {
+        printf("\n====================================\n");
+        printf(" SMART HOSPITAL MANAGEMENT SYSTEM\n");
+        printf("====================================\n");
+        printf("1. Register New Patient\n");
+        printf("2. View Bed Occupancy\n");
+        printf("3. View Priority Queue (Sorted)\n");
+        printf("4. Generate Reports\n");
+        printf("5. Exit\n");
+        printf("====================================\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Register Patient - coming soon\n");
+                break;
+            case 2:
+                printf("Bed Occupancy - coming soon\n");
+                break;
+            case 3:
+                printf("Priority Queue - coming soon\n");
+                break;
+            case 4:
+                printf("Reports - coming soon\n");
+                break;
+            case 5:
+                printf("Exiting system. Goodbye!\n");
+                return 0;
+            default:
+                printf("Invalid choice. Try again.\n");
+        }
+    }
     return 0;
 }
