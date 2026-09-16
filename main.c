@@ -33,31 +33,9 @@ float finalBill[MAX_PATIENTS];
 
 int queueCount[NUM_SPECIALTIES] = {0, 0, 0, 0};
 
-void registerPatient();
+void registerPatient();   // function prototype
 
 int main() {
-
-    void registerPatient() {
-    if (patientCount >= MAX_PATIENTS) {
-        printf("System full. Cannot register more patients.\n");
-        return;
-    }
-
-    int i = patientCount;
-
-    printf("\nEnter Patient Name: ");
-    scanf(" %[^\n]", patientName[i]);
-
-    printf("Enter Patient Age: ");
-    scanf("%d", &patientAge[i]);
-
-    printf("Enter Triage Level (1=Normal, 2=Urgent, 3=Critical): ");
-    scanf("%d", &triageLevel[i]);
-
-    printf("Patient registered successfully!\n");
-    patientCount++;
-}
-
     int choice;
 
     while (1) {
@@ -94,4 +72,35 @@ int main() {
         }
     }
     return 0;
+}
+
+// ---- Function definition goes here, AFTER main() ----
+void registerPatient() {
+    if (patientCount >= MAX_PATIENTS) {
+        printf("System full. Cannot register more patients.\n");
+        return;
+    }
+
+    int i = patientCount;
+
+    printf("\nEnter Patient Name: ");
+    scanf(" %[^\n]", patientName[i]);
+
+    printf("Enter Patient Age: ");
+    scanf("%d", &patientAge[i]);
+
+    printf("Enter Triage Level (1=Normal, 2=Urgent, 3=Critical): ");
+    scanf("%d", &triageLevel[i]);
+
+    printf("\nAvailable Specialties:\n");
+    for (int j = 0; j < NUM_SPECIALTIES; j++) {
+        printf("%d. %s\n", specialtyID[j], specialtyName[j]);
+    }
+    printf("Select Specialty ID (1-4): ");
+    int specID;
+    scanf("%d", &specID);
+    patientSpecialty[i] = specID - 1;
+
+    printf("Patient registered successfully!\n");
+    patientCount++;
 }
