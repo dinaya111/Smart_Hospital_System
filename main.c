@@ -99,8 +99,57 @@ void registerPatient() {
     printf("Select Specialty ID (1-4): ");
     int specID;
     scanf("%d", &specID);
-    patientSpecialty[i] = specID - 1;
 
-    printf("Patient registered successfully!\n");
+   patientSpecialty[i] = specID - 1;
+
+int admitChoice;
+printf("Is patient admitted to a ward? (1=Yes, 0=No): ");
+scanf("%d", &admitChoice);
+
+if (admitChoice == 1) {
+    isAdmitted[i] = 1;
+
+    printf("\nAvailable Wards:\n");
+    for (int j = 0; j < NUM_WARDS; j++) {
+        printf("%d. %s\n", wardID[j], wardName[j]);
+    }
+    printf("Select Ward ID (1-4): ");
+    int wID;
+    scanf("%d", &wID);
+    int wardIndex = wID - 1;
+    patientWard[i] = wardIndex;
+
+    printf("Enter Days Admitted: ");
+    scanf("%d", &daysAdmitted[i]);
+
+    // Find first available bed in that ward
+    int bedFound = -1;
+    for (int b = 0; b < wardCapacity[wardIndex]; b++) {
+        if (bedOccupancy[wardIndex][b] == 0) {
+            bedFound = b;
+            break;
+        }
+    }
+
+    if (bedFound == -1) {
+        printf("No beds available in %s! Patient cannot be admitted.\n", wardName[wardIndex]);
+        isAdmitted[i] = 0;
+        daysAdmitted[i] = 0;
+        assignedBedNo[i] = -1;
+    } else {
+        bedOccupancy[wardIndex][bedFound] = 1;
+        assignedBedNo[i] = bedFound;
+        printf("Bed #%02d assigned in %s.\n", bedFound + 1, wardName[wardIndex]);
+    }
+
+} else {
+    isAdmitted[i] = 0;
+    daysAdmitted[i] = 0;
+    assignedBedNo[i] = -1;
+    patientWard[i] = -1;
+}
+
+printf("Patient registered successfully!\n");
+
     patientCount++;
 }
