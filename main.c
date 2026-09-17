@@ -64,7 +64,7 @@ int main() {
                 printf("Bed Occupancy - coming soon\n");
                 break;
             case 3:
-                printf("Priority Queue - coming soon\n");
+                showPriorityQueue();
                 break;
             case 4:
                 printf("Reports - coming soon\n");
@@ -217,4 +217,41 @@ float calculateWardCost(int wardIdx, int days, int admitted) {
 float calculateDiscount(int age, float grossTotal) {
     if (age < 5 || age > 65) return grossTotal * 0.15;
     return 0;
+}
+void showPriorityQueue() {
+    if (patientCount == 0) {
+        printf("\nNo patients registered yet.\n");
+        return;
+    }
+
+    int indexArr[MAX_PATIENTS];
+    for (int i = 0; i < patientCount; i++) {
+        indexArr[i] = i;
+    }
+
+    // Bubble Sort - descending by triageLevel (3=Critical first)
+    for (int a = 0; a < patientCount - 1; a++) {
+        for (int b = 0; b < patientCount - 1 - a; b++) {
+            if (triageLevel[indexArr[b]] < triageLevel[indexArr[b + 1]]) {
+                int temp = indexArr[b];
+                indexArr[b] = indexArr[b + 1];
+                indexArr[b + 1] = temp;
+            }
+        }
+    }
+
+    printf("\n==================== PRIORITY QUEUE ====================\n");
+    printf("%-12s %-20s %-8s %-15s\n", "Patient ID", "Name", "Age", "Urgency Level");
+    printf("----------------------------------------------------------\n");
+    for (int i = 0; i < patientCount; i++) {
+        int idx = indexArr[i];
+        char *urgencyText;
+        if (triageLevel[idx] == 3) urgencyText = "Critical";
+        else if (triageLevel[idx] == 2) urgencyText = "Urgent";
+        else urgencyText = "Normal";
+
+        printf("PAT-%-8d %-20s %-8d Level %d (%s)\n",
+               1000 + idx + 1, patientName[idx], patientAge[idx], triageLevel[idx], urgencyText);
+    }
+    printf("==========================================================\n");
 }
