@@ -40,6 +40,9 @@ float calculateSurcharge(int specIdx, int urgency);
 float calculateWardCost(int wardIdx, int days, int admitted);
 float calculateDiscount(int age, float grossTotal);
 
+void showPriorityQueue();
+void displayBeds();
+
 int main() {
     int choice;
 
@@ -61,7 +64,7 @@ int main() {
                 registerPatient();
                 break;
             case 2:
-                printf("Bed Occupancy - coming soon\n");
+                displayBeds();
                 break;
             case 3:
                 showPriorityQueue();
@@ -254,4 +257,24 @@ void showPriorityQueue() {
                1000 + idx + 1, patientName[idx], patientAge[idx], triageLevel[idx], urgencyText);
     }
     printf("==========================================================\n");
+}
+void displayBeds() {
+    printf("\n==================== BED OCCUPANCY ====================\n");
+    for (int w = 0; w < NUM_WARDS; w++) {
+        int occupiedCount = 0;
+
+        printf("\n%s (Capacity: %d beds)\n", wardName[w], wardCapacity[w]);
+        printf("Beds: ");
+        for (int b = 0; b < wardCapacity[w]; b++) {
+            printf("%d ", bedOccupancy[w][b]);
+            if (bedOccupancy[w][b] == 1) {
+                occupiedCount++;
+            }
+        }
+        printf("\n");
+
+        float occupancyPercent = ((float)occupiedCount / wardCapacity[w]) * 100;
+        printf("Occupied: %d / %d beds (%.1f%%)\n", occupiedCount, wardCapacity[w], occupancyPercent);
+    }
+    printf("=========================================================\n");
 }
